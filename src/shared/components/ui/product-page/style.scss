@@ -1,0 +1,21 @@
+.accordion_content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 250ms linear, margin-top 250ms linear,
+    rotate 2s linear;
+}
+.accordion_content p {
+  padding-top: 15px;
+}
+
+.accordion_pannel {
+  transition: rotate 1s linear;
+  &:hover {
+    & .accordion_content {
+      grid-template-rows: 1fr;
+    }
+    & .arrow_down {
+      transform: rotate(180deg);
+    }
+  }
+}

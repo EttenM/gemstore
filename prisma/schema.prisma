@@ -1,0 +1,142 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  // url      = env("DATABASE_URL")
+    url = env("POSTGRES_PRISMA_URL")
+  // Uses direct connection, ⚠️ make sure to keep this to `POSTGRES_URL_NON_POOLING`
+  // or you'll have dangling databases from migrations
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Category{
+  id               String            @id @default(cuid())
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+  name             String           
+  slug String
+  subcategories        Subcategories[]
+}
+
+model Subcategories{
+  id               String            @id @default(cuid())
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+  name            String           
+  
+  products Products[]
+  
+  category       Category          @relation(fields: [categoryId], references: [id])
+  categoryId     String
+
+// @@map("sub_categories")
+}
+
+model Products {
+  id               String            @id @default(cuid())
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+  name String
+  description String
+  imageUrl String
+  price           Int
+  color String
+  oldPrice           Int?
+  categoryId String
+  category Subcategories @relation(fields: [categoryId], references: [id])
+
+  productSkus ProductsSkus[]
+  cartItem CartItem[]
+}
+
+model ProductsSkus {
+  id               String            @id @default(cuid())
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+ 
+  type String
+  name String
+  value String
+  quantity Int
+
+  productId String
+  product Products @relation(fields: [productId], references: [id])
+
+}
+
+model Cart {
+     id               String            @id @default(cuid())
+
+    items CartItem[]
+
+    token String
+
+    totalAmount Int @default(0)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model CartItem {
+     id               String            @id @default(cuid())
+
+    cart   Cart @relation(fields: [cartId], references: [id])
+    cartId String
+
+    productItem   Products @relation(fields: [productItemId], references: [id])
+    productItemId String
+    size String?
+    quantity Int @default(1)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Order {
+      id               String            @id @default(cuid())
+
+
+    token String
+
+    totalAmount Int
+    status      OrderStatus
+    paymentId   String?
+
+    items Json
+
+    fullName String
+    email    String
+    phone    String
+    address  String
+    comment  String?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+// model VerificationCode {
+//     id Int @id @default(autoincrement())
+
+//     user   User @relation(fields: [userId], references: [id])
+//     userId Int  @unique
+
+//     code String
+
+//     createdAt DateTime @default(now())
+
+//     @@unique([userId, code])
+// }
+
+enum OrderStatus {
+    PENDING
+    SUCCEEDED
+    CANCELLED
+}

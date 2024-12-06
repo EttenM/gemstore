@@ -1,0 +1,52 @@
+{
+  "name": "gemsstore",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.1",
+    "@hookform/resolvers": "^3.9.1",
+    "@prisma/client": "^5.22.0",
+    "@radix-ui/react-slider": "^1.2.1",
+    "@types/qs": "^6.9.17",
+    "axios": "^1.7.7",
+    "clsx": "^2.1.1",
+    "crypto": "^1.0.1",
+    "gsap": "^3.12.5",
+    "js-cookie": "^3.0.5",
+    "lucide-react": "^0.456.0",
+    "next": "14.2.11",
+    "qs": "^6.13.1",
+    "react": "^18",
+    "react-dadata": "^2.23.3",
+    "react-dom": "^18",
+    "react-hook-form": "^7.53.2",
+    "react-imask": "^7.6.1",
+    "react-use": "^17.5.1",
+    "sass": "^1.80.7",
+    "sonner": "^1.7.0",
+    "tailwind-merge": "^2.5.5",
+    "zod": "^3.23.8",
+    "zustand": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^3.0.6",
+    "@types/node": "^20.17.6",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "postcss": "^8",
+    "prisma": "^5.22.0",
+    "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5"
+  }
+}
