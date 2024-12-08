@@ -17,7 +17,7 @@ const CategoryNav = async () => {
     //   accentColor: "#C2C7B5",
     //   link: "/",
     // },
-    ["title", "Мужчины"],
+    ["title", "Мужчинам"],
     ["image", "/category_2.png"],
     ["backgroundColor", "#44565C"],
     ["accentColor", "#5B7178"],
@@ -38,7 +38,7 @@ const CategoryNav = async () => {
     // },
   ]);
   return (
-    <section className="grid auto-rows-[minmax(0,_125px)] xl:auto-rows-[minmax(0,_250px)] gap-[10px] w-full xl:w-[60%] mx-auto">
+    <section className="grid auto-rows-[minmax(0,_125px)] xl:auto-rows-[minmax(0,_250px)] gap-[10px] w-full xl:w-[60%] mx-auto mb-[30px]">
       {category.map((categories, index) => (
         <Link
           key={categories.id}
